@@ -1,0 +1,189 @@
+﻿
+<Window x:Class="BandedSpectrumAnalyzer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:uc="clr-namespace:BandedSpectrumAnalyzer.UserControls"
+        Title="MediaPlayer"
+        Height="700" Width="1050"
+        Name="mainWindow"
+        xmlns:my="clr-namespace:BandedSpectrumAnalyzer"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize"
+        AllowsTransparency="True" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" Background="Transparent">
+    <Window.Resources>
+        <ResourceDictionary Source="Theme.xaml" />
+    </Window.Resources>
+    <Border Background="White" CornerRadius="40">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--Menu-->
+            <Border Background="White" CornerRadius="40 0 0 40" Grid.RowSpan="2">
+                <StackPanel Margin="0 30 0 0">
+                    <!--Ellipses-->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="left" Margin="63 10 0 10">
+                        <Button x:Name="closeBtn" Click="closeBtn_Click" BorderBrush="White">
+                            <Ellipse Fill="#ff6258" Width="10" Height="10"></Ellipse>
+                        </Button>
+                        <Ellipse Fill="#ffbf2f" Width="10" Height="10" Margin="7 0"></Ellipse>
+                        <Ellipse Fill="#2acb42" Width="10" Height="10"></Ellipse>
+                    </StackPanel>
+
+                    <TextBlock Text="LIBRARY" Style="{StaticResource menuTitle}" />
+
+                    <Button Style="{StaticResource menuButton}" Background="#02be68" Foreground="White">
+                        <Grid>
+                            <TextBlock Text="Home" Margin="0 0 0 2"/>
+                            <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}" Visibility="Visible"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource menuButton}">
+                        <Grid>
+                            <TextBlock Text="Playlists" Margin="0 0 0 2"/>
+                            <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource menuButton}">
+                        <Grid>
+                            <TextBlock Text="Artists" Margin="0 0 0 2"/>
+                            <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource menuButton}">
+                        <Grid>
+                            <TextBlock Text="Albums" Margin="0 0 0 2"/>
+                            <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
+                        </Grid>
+                    </Button>
+
+                    <Button Style="{StaticResource menuButton}">
+                        <Grid>
+                            <TextBlock Text="Songs" Margin="0 0 0 2"/>
+                            <Icon:PackIconMaterial Style="{StaticResource menuButtonIcon}"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!--Music Section-->
+            <StackPanel Grid.Column="1" Background="white" Margin="40 60 10 0">
+                <TextBlock Text="Home" Style="{StaticResource titleText}"/>
+
+                <Border CornerRadius="20" Margin="0 20 0 0">
+
+                    <Border.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#30ad9a" Offset="0"/>
+                            <GradientStop Color="#18c274" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="20" ShadowDepth="0" Opacity="0.4" Color="#1fae7e"/>
+                    </Border.Effect>
+
+                    <Grid>
+                        <Border Opacity="0.07" CornerRadius="20">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Images/bg.png"/>
+                            </Border.Background>
+                        </Border>
+                        <Image x:Name="myImage"></Image>
+
+                        <!--Music List-->
+                        <StackPanel Margin="20">
+                            <TextBlock Text="Любимое" Foreground="White" FontSize="26" FontWeight="Bold" Margin="0 10 0 20"/>
+
+                            <StackPanel x:Name="playlistTracksPanel">
+                                <uc:SongItem Number="01" Title="Love Story" Time="03:56" Path="C:/Users/cde12/source/repos/MusicPlayer/MusicPlayer/music/Favorite/Marmalade.mp3"/>
+                                <uc:SongItem Number="02" Title="You Need to Calm" Time="03:39"/>
+                                <uc:SongItem Number="03" Title="Blank Space" Time="02:59"/>
+                                <uc:SongItem Number="04" Title="ME" Time="03:33"/>
+                                <uc:SongItem Number="05" Title="Shake It Off" Time="05:52"/>
+                                <uc:SongItem Number="06" Title="Red" Time="04:47"/>
+                                <uc:SongItem Number="07" Title="You Belong With Me" Time="06:20"/>
+                                <uc:SongItem Number="08" Title="You Belong With Me" Time="06:20"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+
+            <!--Right Section-->
+            <Border Grid.Column="2" CornerRadius="0 40 0 0" Background="White" Margin="0 22 0 0">
+                <StackPanel Margin="30 50 30 30" VerticalAlignment="Center">
+
+                    <my:SpectrumAnalyzer x:Name="spectrumAnalyzer"
+                         Height="160"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Bottom"
+                         AveragePeaks="False"
+                         MinimumFrequency="20"
+                         MaximumFrequency="20000"
+                         PeakFallDelay="10"
+                         BarHeightScaling="Decibel" />
+                </StackPanel>
+            </Border>
+
+            <!--Player-->
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="#03bf69" CornerRadius="0 0 40 40">
+                <StackPanel Orientation="Horizontal">
+                    <Ellipse Width="60" Height="60" Margin="30 0 0 0">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Images/bg.png"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <StackPanel VerticalAlignment="Center" Margin="20 0 30 0">
+                        <TextBlock x:Name="FileText" Width="300" Text="" Foreground="White" FontSize="22" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel VerticalAlignment="Center" Margin="20 0 30 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="nowTrackTime" Width="35" Foreground="#787c7a" FontSize="14" Text="0:00" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Slider Style="{DynamicResource SliderStyle1}" x:Name="ProgressSlider" VerticalAlignment="Center" Margin="20 0 20 0" HorizontalAlignment="Stretch" Width="450" ValueChanged="ProgressSlider_ValueChanged"/>
+                            <TextBlock x:Name="maxTrackTime" Width="35" Foreground="#787c7a" FontSize="14" Text="0:00" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                            <Button x:Name="BrowseButton" Style="{StaticResource playerButton}" Click="BrowseButton_Click">
+                                <Icon:PackIconMaterial Kind="Menu" Style="{StaticResource playerButtonIcon}"/>
+                            </Button>
+
+                            <Button x:Name="PauseButton" Style="{StaticResource playerButton}" Click="PauseButton_Click">
+                                <Icon:PackIconMaterial Kind="Pause" Style="{StaticResource playerButtonIcon}"/>
+                            </Button>
+
+                            <Button x:Name="PlayButton" Style="{StaticResource playerButton}" Visibility="Collapsed" Click="PlayButton_Click">
+                                <Icon:PackIconMaterial Kind="Play" Style="{StaticResource playerButtonIcon}"/>
+                            </Button>
+
+                            <Button x:Name="NextButton" Style="{StaticResource playerButton}" Click="NextButton_Click">
+                                <Icon:PackIconMaterial Kind="SkipNext" Style="{StaticResource playerButtonIcon}"/>
+                            </Button>
+
+                            <Slider Style="{DynamicResource SliderStyle1}" x:Name="volumeSlider" IsSelectionRangeEnabled="True" VerticalAlignment="Center" Value="0.5" Width="350" Maximum="1" ValueChanged="volumeSlider_ValueChanged"/>
+
+                            <Button Style="{StaticResource playerButton}">
+                                <Icon:PackIconMaterial Kind="VolumeMedium" Style="{StaticResource playerButtonIcon}"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
